@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Assistant</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #1a2a44;
+    }
+    header {
+      background: linear-gradient(90deg, #3b82f6, #2563eb);
+      color: white;
+      width: 100%;
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30%, rgba(255, 255, 255, 0.2), transparent 50%);
+      opacity: 0.3;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      position: relative;
+      z-index: 1;
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 700px;
+      margin: 2.5rem auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    main:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+    p {
+      font-size: 1.1rem;
+      color: #4b5e7a;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .choice-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    button:hover::after {
+      width: 200px;
+      height: 200px;
+    }
+    button:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a2a44;
+      margin-bottom: 0.3rem;
+    }
+    input[type="text"], textarea {
+      padding: 0.9rem;
+      font-size: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background: #f9fafb;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    input[type="text"]:focus, textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+    input[type="submit"] {
+      background: #10b981;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    .result {
+      margin-top: 2rem;
+      background: #f0fdf4;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid #bbf7d0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      color: #1a2a44;
+      white-space: pre-wrap;
+      transition: opacity 0.3s ease;
+    }
+    .hidden {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      main {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .choice-buttons {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+  <script>
+    function showForm(type) {
+      document.getElementById('stock-form').style.display = type === 'stock' ? 'block' : 'none';
+      document.getElementById('general-form').style.display = type === 'general' ? 'block' : 'none';
+      document.getElementById('result').style.opacity = '0';
+      document.getElementById('result').innerText = '';
+      setTimeout(() => {
+        document.getElementById('result').style.opacity = '1';
+      }, 300);
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Financial Assistant</h1>
+  </header>
+  <main>
+    <p>Your smart companion for stock prices and financial insights!</p>
+    <div class="choice-buttons">
+      <button onclick="showForm('stock')">Get Stock Price</button>
+      <button onclick="showForm('general')">General Finance Query</button>
+    </div>
+
+    <form id="stock-form" action="/stock" method="post" style="display:none;">
+      <label for="company">Enter Company Name or Ticker:</label>
+      <input type="text" id="company" name="company" required />
+      <input type="submit" value="Get Stock Price" />
+    </form>
+
+    <form id="general-form" action="/general" method="post" style="display:none;">
+      <label for="query">Enter your finance question:</label>
+      <textarea id="query" name="query" rows="4" required></textarea>
+      <input type="submit" value="Ask" />
+    </form>
+
+    <div id="result" class="result">{{ result|default('') }}</div>
+  </main>
+</body>
+</html>
