@@ -5,11 +5,15 @@ import requests
 import logging
 from datetime import datetime
 import yfinance as yf
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 # Logging setup
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-FINNHUB_API_KEY = "d0tkeqpr01qlvahcn8vgd0tkeqpr01qlvahcn900"
+
+FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY")
 
 def clean_query(raw_query):
     """Remove common noise words from the query."""

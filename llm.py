@@ -53,7 +53,7 @@ def financial_llm_loop():
     while True:
         user_input = input("\nAsk your finance-related question: ").strip()
         if user_input.lower() == 'exit':
-            print("👋 Exiting. Take care!")
+            print("Exiting. Take care!")
             break
         answer = ask_financial_question(user_input)
         print("\n Response:")
