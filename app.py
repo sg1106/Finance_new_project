@@ -62,7 +62,7 @@ def general_query():
         return render_template('index.html', result="Please enter a finance-related question.")
 
     if not is_finance_query(user_query):
-        return render_template('index.html', result="❌ Sorry, I can only answer finance-related questions.")
+        return render_template('index.html', result=" Sorry, I can only answer finance-related questions.")
 
     answer = ask_financial_question(user_query)
     return render_template('index.html', result=answer)

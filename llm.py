@@ -11,7 +11,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 if not GEMINI_API_KEY:
-    print("❗ Error: GEMINI_API_KEY not found in .env file.")
+    print(" Error: GEMINI_API_KEY not found in .env file.")
     exit()
 
 genai.configure(api_key=GEMINI_API_KEY)
@@ -39,14 +39,14 @@ Answer:"""
 
 def ask_financial_question(prompt):
     if not is_finance_query(prompt):
-        return "❌ Sorry, I can only answer finance-related questions."
+        return " Sorry, I can only answer finance-related questions."
 
     try:
         response = model.generate_content(prompt)
         return response.text.strip()
     except Exception as e:
         logging.error(f"Error generating content: {e}")
-        return "⚠️ Error generating a response. Please try again."
+        return " Error generating a response. Please try again."
 
 def financial_llm_loop():
     print("💰 Gemini Financial Assistant. Type 'exit' to quit.")
@@ -56,7 +56,7 @@ def financial_llm_loop():
             print("👋 Exiting. Take care!")
             break
         answer = ask_financial_question(user_input)
-        print("\n📈 Response:")
+        print("\n Response:")
         print(answer)
 
 if __name__ == "__main__":
