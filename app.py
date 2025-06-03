@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from financial_agent import lookup_ticker, get_stock_quote_finnhub, get_stock_quote_yfinance  # Adjust imports to your functions
 from llm import is_finance_query, ask_financial_question  # Adjust if needed
 from datetime import datetime
-
+import os
 app = Flask(__name__)
 
 def format_stock_data(stock_data, ticker, company_name):
